@@ -2,7 +2,6 @@ package sat;
 
 import sat.env.Environment;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.File;
 

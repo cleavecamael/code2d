@@ -34,12 +34,12 @@ public class CNFReader {
         return output;
     }
     /** Takes in a string containing the file location to read, and outputs the formula
+     *
      */
     public static Formula readCNF(String fileName)  {
         try {
 
             File CNFFile = new File(fileName);
-            System.out.println("Start");
             Scanner scan = new Scanner(CNFFile);
             String line;
             while (scan.hasNextLine()){

@@ -1,0 +1,8 @@
+c Dinner
+p cnf 5 6
+-meat 0
+halal 0
+-seafood 0
+-spicy 0
+halal -seafood 0
+-halal spicy seafood meat 0

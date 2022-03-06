@@ -86,6 +86,10 @@ public class SATSolver {
             literalBool = Bool.FALSE;
         }
 
+        if (min_size == 1){
+            return solve(substitute(clauses, next_literal), env.put(next_literal.getVariable(), literalBool));
+        }
+
         Environment results = solve(substitute(clauses, next_literal), env.put(next_literal.getVariable(), literalBool));
         if (results != null){
             return results;

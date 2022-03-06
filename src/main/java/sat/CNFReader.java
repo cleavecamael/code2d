@@ -48,21 +48,30 @@ public class CNFReader {
                     break;
                 }
             }
-            scan.useDelimiter("\\s0");
+            /** We can now start reading the clauses, using a space/tab/new line followed by
+             * 0 as a delimiter
+             */
+            scan.useDelimiter("[\\t\\n\\s]0");
+
+            /** Since each token is delimited by 0, the token after the last 0 is not valid,
+             * so we only want to read until the second last token.
+             */
+            String prevLine = null;
+            String currLine = scan.next().trim();
             Formula output = new Formula();
+
+
+
             while (scan.hasNext()){
-                try {
-                    output = output.addClause(readClause(scan.next().trim()));
-                } catch (Exception e) {
-                    break;
-                }
+                    prevLine = currLine;
+                    currLine = scan.next().trim();
+                    output = output.addClause(readClause(prevLine));
             }
             scan.close();
             return output;
 
         }catch (FileNotFoundException error){
-            System.out.println("Error: File name not found");
-
+            error.printStackTrace();
             return null;
 
         }

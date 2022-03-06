@@ -61,20 +61,20 @@ public class SATSolver {
         }
         /** Iterates to find the smallest clause, or returns false if it encounters an empty clause
          */
-        Clause min_clause = clauses.first();
-        int min_size  = clauses.first().size();
+        Clause minClause = clauses.first();
+        int minSize  = clauses.first().size();
         for (Clause claus:clauses){
             if (claus.isEmpty()){
                 return null;
             }
-            if (claus.size() < min_size){
-                min_size = claus.size();
-                min_clause = claus;
+            if (claus.size() < minSize ){
+                minSize  = claus.size();
+                minClause = claus;
             }
         }
         /** Selects the next literal to try to substitute
          */
-        Literal next_literal = min_clause.chooseLiteral();
+        Literal next_literal = minClause.chooseLiteral();
         /** Boolean value that when assigned to literal value would evaluate to true
          */
         Bool literalBool;
@@ -86,7 +86,7 @@ public class SATSolver {
             literalBool = Bool.FALSE;
         }
 
-        if (min_size == 1){
+        if (minSize  == 1){
             return solve(substitute(clauses, next_literal), env.put(next_literal.getVariable(), literalBool));
         }
 

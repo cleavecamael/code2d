@@ -20,11 +20,11 @@ public class SATSolver {
      * unit propagation. The returned environment binds literals of class
      * bool.Variable rather than the special literals used in clausification of
      * class clausal.Literal, so that clients can more readily use it.
-     * 
-     * @return an environment for which the problem evaluates to Bool.true, or
-     *         null if no such environment exists.
      *
-
+     * @return an environment for which the problem evaluates to Bool.true, or
+     * null if no such environment exists.
+     *
+     *
      *
      * Simplify:
      * For each clause:
@@ -43,17 +43,15 @@ public class SATSolver {
     /**
      * Takes a partial assignment of variables to values, and recursively
      * searches for a complete satisfying assignment.
-     * 
-     * @param clauses
-     *            formula in conjunctive normal form
-     * @param env
-     *            assignment of some or all variables in clauses to true or
-     *            false values.
+     *
+     * @param clauses formula in conjunctive normal form
+     * @param env     assignment of some or all variables in clauses to true or
+     *                false values.
      * @return an environment for which all the clauses evaluate to Bool.true,
-     *         or null if no such environment exists.
+     * or null if no such environment exists.
      */
     private static Environment solve(ImList<Clause> clauses, Environment env) {
-        if (clauses.isEmpty()){
+        if (clauses.isEmpty()) {
             /** put placeholder for solvable
              *
              */
@@ -62,39 +60,45 @@ public class SATSolver {
         /** Iterates to find the smallest clause, or returns false if it encounters an empty clause
          */
         Clause minClause = clauses.first();
-        int minSize  = clauses.first().size();
-        for (Clause claus:clauses){
-            if (claus.isEmpty()){
+        int minSize = clauses.first().size();
+        for (Clause claus : clauses) {
+            if (claus.isEmpty()) {
                 return null;
             }
-            if (claus.size() < minSize ){
-                minSize  = claus.size();
+            if (claus.size() < minSize) {
+                minSize = claus.size();
                 minClause = claus;
             }
         }
         /** Selects the next literal to try to substitute
          */
         Literal next_literal = minClause.chooseLiteral();
-        /** Boolean value that when assigned to literal value would evaluate to true
+
+        /** Boolean value to assign to the next literal to set it to TRUE
+         * Positive literals are assigned TRUE, Negative literals assigned FALSE
          */
         Bool literalBool;
 
-        if (next_literal.getClass().getSimpleName().equals("PosLiteral")){
+        if (next_literal.getClass().getSimpleName().equals("PosLiteral")) {
             literalBool = Bool.TRUE;
-        }
-        else{
+        } else {
             literalBool = Bool.FALSE;
         }
 
-        if (minSize  == 1){
+        /** If clause has 1 literal, that literal must be set to TRUE
+         */
+        if (minSize == 1) {
             return solve(substitute(clauses, next_literal), env.put(next_literal.getVariable(), literalBool));
         }
 
+        /** Otherwise, try setting the literal to TRUE or FALSE and checking if
+         * it is satisfiable
+         */
+
         Environment results = solve(substitute(clauses, next_literal), env.put(next_literal.getVariable(), literalBool));
-        if (results != null){
+        if (results != null) {
             return results;
-        }
-        else{
+        } else {
             return solve(substitute(clauses, next_literal.getNegation()), env.put(next_literal.getVariable(), literalBool.not()));
         }
     }
@@ -102,24 +106,27 @@ public class SATSolver {
     /**
      * given a clause list and literal, produce a new list resulting from
      * setting that literal to true
-     * 
-     * @param clauses
-     *            , a list of clauses
-     * @param l
-     *            , a literal to set to true
+     *
+     * @param clauses , a list of clauses
+     * @param l       , a literal to set to true
      * @return a new list of clauses resulting from setting l to true
      */
     private static ImList<Clause> substitute(ImList<Clause> clauses,
-            Literal l) {
+                                             Literal l) {
+        /** Create a new ImList to store our output.
+         * Reduce each clause using the literal given
+         * If the clause becomes true, do not add to the output list
+         * Finally, return the output list
+         */
         ImList<Clause> output = new EmptyImList<Clause>();
-        for (Clause claus:clauses){
+        for (Clause claus : clauses) {
             Clause red_claus = claus.reduce(l);
-            if (red_claus != null){
+            if (red_claus != null) {
                 output = output.add(red_claus);
             }
 
         }
-       return output;
+        return output;
     }
 
 }

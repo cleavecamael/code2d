@@ -61,8 +61,8 @@ public class SATSolver {
         }
         /** Iterates to find the smallest clause, or returns false if it encounters an empty clause
          */
-        Clause min_clause = new Clause();
-        int min_size  = Integer.MAX_VALUE;
+        Clause min_clause = clauses.first();
+        int min_size  = clauses.first().size();
         for (Clause claus:clauses){
             if (claus.isEmpty()){
                 return null;

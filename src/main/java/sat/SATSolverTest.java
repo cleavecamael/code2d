@@ -15,7 +15,7 @@ public class SATSolverTest {
         String filename = args[0];
         Environment output = SATSolver.solve(CNFReader.readCNF(filename));
         if (output != null) {
-            writeEnv.writeEnvFile(output, "BoolAssignment.txt");
+            WriteEnv.writeEnvFile(output, "BoolAssignment.txt");
             System.out.println("Satisfiable");
         } else {
             System.out.println("Unsatisfiable");

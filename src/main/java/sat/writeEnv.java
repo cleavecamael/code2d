@@ -12,7 +12,7 @@ import java.io.File;
  * string is formatted and written into the file at once, so this function may not work
  * for very large environments.
  */
-public class writeEnv {
+public class WriteEnv {
     public static String convFormat(String envString){
         /** Remove the "Environment: " and square brackets in the toString of env
          */

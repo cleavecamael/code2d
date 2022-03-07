@@ -78,8 +78,6 @@ public class CNFReader {
             String currLine = scan.next().trim();
             Formula output = new Formula();
 
-
-
             while (scan.hasNext()){
                     prevLine = currLine;
                     currLine = scan.next().trim();

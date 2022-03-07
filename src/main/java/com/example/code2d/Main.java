@@ -17,7 +17,7 @@ import sat.formula.Literal;
 import sat.formula.NegLiteral;
 import sat.formula.PosLiteral;
 import sat.env.Variable;
-import sat.writeEnv;
+import sat.WriteEnv;
 
 
 public class Main {
@@ -25,7 +25,7 @@ public class Main {
         String filename = args[0];
         Environment output = SATSolver.solve(CNFReader.readCNF(filename));
         if (output != null){
-            writeEnv.writeEnvFile(output,"BoolAssignment.txt");
+            WriteEnv.writeEnvFile(output,"BoolAssignment.txt");
             System.out.println("Satisfiable");
         }
         else{

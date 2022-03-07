@@ -1,7 +1,9 @@
 package sat;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 import sat.formula.Clause;
 import sat.formula.Formula;
@@ -27,8 +29,24 @@ public class CNFReader {
          */
         String cleanS = s.replaceAll("[\\t\\n]+"," ");
         String[] literals = cleanS.split(" ");
+        Clause bufferClause;
+        /** Contains list of literals whose negation also appears in the strings
+         * and are thus redundant and can be removed
+         */
+        Set<Literal> redLiterals = new HashSet<Literal>();
+
         for (String i: literals){
-            output = output.add(readLiteral(i));
+                bufferClause = output.add(readLiteral(i));
+                if (bufferClause != null){
+                    output = bufferClause;
+                }
+                else{
+                    redLiterals.add(readLiteral(i));
+                }
+
+        }
+        for (Literal l: redLiterals){
+            output = output.reduce(l);
         }
 
         return output;

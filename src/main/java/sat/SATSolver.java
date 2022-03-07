@@ -16,23 +16,11 @@ import sat.formula.Literal;
 
 public class SATSolver {
     /**
-     * Solve the problem using a simple version of DPLL with backtracking and
-     * unit propagation. The returned environment binds literals of class
-     * bool.Variable rather than the special literals used in clausification of
-     * class clausal.Literal, so that clients can more readily use it.
      *
      * @return an environment for which the problem evaluates to Bool.true, or
      * null if no such environment exists.
-     *
-     *
-     *
-     * Simplify:
-     * For each clause:
-     * if clause.contains(): list.remove(clause)
-     * if clause.contains(): remove the neg a
-     *
-     * return clauses
      */
+
     public static Environment solve(Formula formula) {
 
         Environment start_env = new Environment();
